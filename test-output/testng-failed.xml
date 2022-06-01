@@ -5,9 +5,10 @@
     <classes>
       <class name="tests.EcommerceTest">
         <methods>
-          <include name="quit"/>
-          <include name="CreateAccount"/>
-          <include name="setup"/>
+          <include name="step02_AccountExistsError"/>
+          <include name="afterClass"/>
+          <include name="beforeClass"/>
+          <include name="beforeMethod"/>
         </methods>
       </class> <!-- tests.EcommerceTest -->
     </classes>

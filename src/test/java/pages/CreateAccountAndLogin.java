@@ -29,16 +29,16 @@ public class CreateAccountAndLogin {
 		property.load(objFile);
 	}
 
-	public void enterEmailCreateAccount() {
-		js.executeScript("arguments[0].scrollIntoView();",
-				drive.findElement(By.xpath(property.getProperty("enterEmail.xpath"))));
-		drive.findElement(By.id(property.getProperty("enterEmail.id"))).sendKeys("testinghere1@testing.com");
-		drive.findElement(By.id(property.getProperty("submitEmailBtn.id")));
+	public void enterEmailCreateAccount() throws Exception {
+		Thread.sleep(3000);
+		drive.findElement(By.cssSelector(property.getProperty("enterEmail.css"))).sendKeys("testinghere@testing7.com");
+		drive.findElement(By.xpath(property.getProperty("submitEmailBtn.xpath"))).click();
 	}
 
-	public void enterDetailsCreateAccount() {
-		wait.until(ExpectedConditions
-				.elementToBeClickable(drive.findElement(By.id(property.getProperty("submitGenderMale.id")))));
+	public void enterDetailsCreateAccount() throws Exception {
+		Thread.sleep(5000);
+//		wait.until(ExpectedConditions
+//				.elementToBeClickable(drive.findElement(By.id(property.getProperty("submitGenderMale.id")))));
 		drive.findElement(By.id(property.getProperty("submitGenderMale.id"))).click();
 		drive.findElement(By.id(property.getProperty("enterFirstName.id"))).sendKeys("First Name");
 		drive.findElement(By.id(property.getProperty("enterLastName.id"))).sendKeys("Last Name");
@@ -57,12 +57,16 @@ public class CreateAccountAndLogin {
 		drive.findElement(By.id(property.getProperty("enterCity.id"))).sendKeys("City");
 		Select state = new Select(drive.findElement(By.id(property.getProperty("selectState.id"))));
 		state.selectByIndex(3);
-		drive.findElement(By.id(property.getProperty("enterPostcode.id"))).sendKeys("123456");
+		drive.findElement(By.id(property.getProperty("enterPostcode.id"))).sendKeys("12345");
 		Select country = new Select(drive.findElement(By.id(property.getProperty("selectCountry.id"))));
-		country.selectByValue("India");
+		country.selectByIndex(1);
 		drive.findElement(By.id(property.getProperty("enterPhoneno.id"))).sendKeys("1234567890");
 		drive.findElement(By.id(property.getProperty("enterAliasAddress.id"))).sendKeys("Home");
 		drive.findElement(By.id(property.getProperty("submitCreateAccountBtn.id"))).click();
+	}
+	
+	public void signOut() {
+		drive.findElement(By.linkText(property.getProperty("signOutBtn.linktext"))).click();
 	}
 
 }
