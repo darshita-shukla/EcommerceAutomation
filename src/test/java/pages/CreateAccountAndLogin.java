@@ -31,7 +31,7 @@ public class CreateAccountAndLogin {
 
 	public void enterEmailCreateAccount() throws Exception {
 		Thread.sleep(3000);
-		drive.findElement(By.cssSelector(property.getProperty("enterEmail.css"))).sendKeys("testinghere@testing7.com");
+		drive.findElement(By.cssSelector(property.getProperty("enterEmail.css"))).sendKeys("testinghere@13.com");
 		drive.findElement(By.xpath(property.getProperty("submitEmailBtn.xpath"))).click();
 	}
 
@@ -67,6 +67,12 @@ public class CreateAccountAndLogin {
 	
 	public void signOut() {
 		drive.findElement(By.linkText(property.getProperty("signOutBtn.linktext"))).click();
+	}
+	
+	public void incorrectLogin() {
+		drive.findElement(By.id(property.getProperty("enterLoginEmail.id"))).sendKeys("testing1com");
+		drive.findElement(By.id(property.getProperty("enterLoginPassword.id"))).sendKeys("testing1");
+		drive.findElement(By.id(property.getProperty("submitLoginBtn.id"))).click();
 	}
 
 }

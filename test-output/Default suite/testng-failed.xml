@@ -5,7 +5,7 @@
     <classes>
       <class name="tests.EcommerceTest">
         <methods>
-          <include name="step02_AccountExistsError"/>
+          <include name="step04_SearchProductFeature"/>
           <include name="afterClass"/>
           <include name="beforeClass"/>
           <include name="beforeMethod"/>

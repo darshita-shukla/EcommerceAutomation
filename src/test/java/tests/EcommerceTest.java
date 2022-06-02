@@ -14,12 +14,14 @@ import org.testng.annotations.Test;
 
 import pages.CreateAccountAndLogin;
 import pages.HomePageActions;
+import pages.SearchProduct;
 
 public class EcommerceTest {
 	WebDriver drive;
 	WebDriverWait wait;
 	HomePageActions objHome;
 	CreateAccountAndLogin objCreate;
+	SearchProduct objSearch;
 
 	@BeforeClass
 	public void beforeClass() {
@@ -29,6 +31,7 @@ public class EcommerceTest {
 		wait = new WebDriverWait(drive, Duration.ofSeconds(5));
 		objHome = new HomePageActions(drive);
 		objCreate = new CreateAccountAndLogin(drive, wait);
+		objSearch = new SearchProduct(drive);
 	}
 
 	@BeforeMethod
@@ -55,11 +58,33 @@ public class EcommerceTest {
 		objHome.setup();
 		objHome.goToSignin();
 		objCreate.enterEmailCreateAccount();
-		String actual = drive
-				.findElement(By.xpath("//div[@id='create_account_error']"))
-				.getText();
+		String actual = drive.findElement(By.xpath("//div[@id='create_account_error']")).getText();
 //	Assert.assertEquals(actual,
-	//			"An account using this email address has already been registered. Please enter a valid password or request a new one.");
+		// "An account using this email address has already been registered. Please
+		// enter a valid password or request a new one.");
+		System.out.println(actual);
+	}
+
+	@Test
+	public void step03_InvalidEmailAddressLoginError() throws Exception {
+		objHome.setup();
+		objHome.goToSignin();
+		objCreate.incorrectLogin();
+		String actual = drive.findElement(By.xpath("//li[normalize-space()='Invalid email address.']")).getText();
+		Assert.assertEquals(actual, "Invalid email address.");
+	}
+
+	@Test
+	public void step04_SearchProductFeature() throws Exception {
+		objHome.setup();
+		objSearch.openTshirtTabFromWomen();
+		String expected = objSearch.searchProduct();
+		String actual = drive
+				.findElement(By.xpath(
+						"/html[1]/body[1]/div[1]/div[2]/div[1]/div[3]/div[2]/ul[1]/li[1]/div[1]/div[2]/h5[1]/a[1]"))
+				.getText();
+		Assert.assertEquals(actual, expected);
+
 	}
 
 	@AfterClass
