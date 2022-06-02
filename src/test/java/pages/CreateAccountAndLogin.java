@@ -31,7 +31,7 @@ public class CreateAccountAndLogin {
 
 	public void enterEmailCreateAccount() throws Exception {
 		Thread.sleep(3000);
-		drive.findElement(By.cssSelector(property.getProperty("enterEmail.css"))).sendKeys("testinghere@13.com");
+		drive.findElement(By.cssSelector(property.getProperty("enterEmail.css"))).sendKeys("testinghere@14.com");
 		drive.findElement(By.xpath(property.getProperty("submitEmailBtn.xpath"))).click();
 	}
 
