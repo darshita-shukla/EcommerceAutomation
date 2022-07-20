@@ -10,6 +10,7 @@ import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import pages.CreateAccountAndLogin;
@@ -40,24 +41,25 @@ public class EcommerceTest {
 		drive.get("http://automationpractice.com/index.php");
 	}
 
-	@Test
-	public void step01_CreateAccountSuccess() throws Exception {
+	@Test(dataProvider = "TestData1")
+	public void step01_CreateAccountSuccess(String email, String fname, String lname, String password, String company,
+			String address, String city, String pcode, String phno, String alias) throws Exception {
 		objHome.setup();
 		objHome.goToSignin();
 		objCreate.setup();
-		objCreate.enterEmailCreateAccount();
-		objCreate.enterDetailsCreateAccount();
+		objCreate.enterEmailCreateAccount(email);
+		objCreate.enterDetailsCreateAccount(fname, lname, password, company, address, city, pcode, phno, alias);
 		String actual = drive.findElement(By.className("info-account")).getText();
 		Assert.assertEquals(actual,
 				"Welcome to your account. Here you can manage all of your personal information and orders.");
 		objCreate.signOut();
 	}
 
-	@Test
-	public void step02_AccountExistsError() throws Exception {
+	@Test(dataProvider="TestData2")
+	public void step02_AccountExistsError(String email) throws Exception {
 		objHome.setup();
 		objHome.goToSignin();
-		objCreate.enterEmailCreateAccount();
+		objCreate.enterEmailCreateAccount(email);
 		String actual = drive.findElement(By.xpath("//div[@id='create_account_error']")).getText();
 //	Assert.assertEquals(actual,
 		// "An account using this email address has already been registered. Please
@@ -96,5 +98,20 @@ public class EcommerceTest {
 			e.printStackTrace();
 		}
 		drive.quit();
+	}
+
+	@DataProvider(name = "TestData1")
+	public Object[][] getDataFromDataprovider1() {
+		return new Object[][] {
+				{ "testinghere@16.com", "First Name", "Last Name", "testing1", "Company", "Address", "City", "12345",
+						"1234567890", "Home" },
+				{ "testinghere@17.com", "First Name", "Last Name", "testing1", "Company", "Address", "City", "12345",
+						"1234567890", "Home" } };
+	}
+	@DataProvider(name="TestData2")
+	public Object[][] getDataFromDataprovider2() {
+		return new Object[][] {
+				{ "testinghere@16.com" },
+				{ "testinghere@17.com" } };
 	}
 }
